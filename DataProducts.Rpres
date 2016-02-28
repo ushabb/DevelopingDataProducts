@@ -1,0 +1,53 @@
+Developing Data Products Course Project - Exploiting the mtcars dataset
+========================================================
+author: Usha B Biradar
+date: February 28, 2016
+
+Executive Summary
+========================================================
+Exploiting mtcars Dataset to build a dataproduct
+
+<font size="4.5">This is an analysis to answer some questions using regression and exploratory data analyses for Motor Trend, a magazine about the automobile industry.From the exploratory analysis it is clear that there can be two considerations here - A model of 'mpg vs all variables' and an optimized model of 'mpg vs am + (qsec+ wt)' accounting for confounders. This is sustantaiated by model fitting and anova.With the aid of residual plots(testimony to the fact that there are other significant regressors along with 'am' and that the choice of a multivariate model is right)
+This application has 5 tab which can be used as follows:</font size>
+- <font size = "5"> Help tab</font size>
+- <font size = "5"> Summary : A simple summary of the dataset - No inputs required.</font size>
+- <font size = "5"> Plots: Simple box plots of mpg vs variables. Input variable under'Exploratory Data Analysis' is required. Outliers if any can be indicated by checking the box 'Show outliers'.</font size>
+- <font size = "5"> Prediction: Multivariate Regression Model - Three inputs under 'Prediction' are required.</font size>
+- <font size = "5"> Residual Plots and Diagnostics. No inputs required</font size>
+
+Exploratory data analysis
+========================================================
+
+Summary of the dataset
+```{r loaddataonce, echo =FALSE}
+library(datasets)
+library(dplyr)
+data(mtcars)
+str(mtcars)
+```
+
+Exploratory Plots 
+========================================================
+Plots of mpg vs varius variables
+Sample plots of mpg vs variables
+```{r loaddata, echo =FALSE}
+library(datasets)
+library(dplyr)
+data(mtcars)
+```
+```{r plots2, echo = FALSE}
+boxplot(mpg ~ am, data = mtcars,
+                        col="yellow",
+                        xlab="Miles/(US) gallon",
+                        ylab="variable")
+```
+
+Prediction Function in Data Product
+========================================================
+
+The following Prediction function is used:
+```{r Predictfunct, echo=TRUE}
+LinearModel <- lm(mpg ~. ,  data=mtcars)
+OptimizedModel <- step(LinearModel,direction="both")
+summary(OptimizedModel)
+```
