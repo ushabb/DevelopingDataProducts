@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Developingdataproducts by ushabb</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/ushabb/DevelopingDataProducts">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/ushabb/DevelopingDataProducts/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/ushabb/DevelopingDataProducts/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Developingdataproducts</h1>
+          <p>Course Project</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/ushabb">ushabb</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="developing-data-products-course-project---exploiting-the-mtcars-dataset" class="anchor" href="#developing-data-products-course-project---exploiting-the-mtcars-dataset" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Developing Data Products Course Project - Exploiting the mtcars dataset</h1>
+
+<p>author: Usha B Biradar
+date: February 28, 2016</p>
+
+<h1>
+<a id="executive-summary" class="anchor" href="#executive-summary" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Executive Summary</h1>
+
+<p>Exploiting mtcars Dataset to build a dataproduct</p>
+
+<p>This is an analysis to answer some questions using regression and exploratory data analyses for Motor Trend, a magazine about the automobile industry.From the exploratory analysis it is clear that there can be two considerations here - A model of 'mpg vs all variables' and an optimized model of 'mpg vs am + (qsec+ wt)' accounting for confounders. This is sustantaiated by model fitting and anova.With the aid of residual plots(testimony to the fact that there are other significant regressors along with 'am' and that the choice of a multivariate model is right)
+This application has 5 tab which can be used as follows:</p>
+
+<ul>
+<li> Help tab</li>
+<li> Summary : A simple summary of the dataset - No inputs required.</li>
+<li> Plots: Simple box plots of mpg vs variables. Input variable under'Exploratory Data Analysis' is required. Outliers if any can be indicated by checking the box 'Show outliers'.</li>
+<li> Prediction: Multivariate Regression Model - Three inputs under 'Prediction' are required.</li>
+<li> Residual Plots and Diagnostics. No inputs required</li>
+</ul>
+
+<h1>
+<a id="exploratory-data-analysis" class="anchor" href="#exploratory-data-analysis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exploratory data analysis</h1>
+
+<p>Summary of the dataset</p>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">datasets</span>)
+library(<span class="pl-smi">dplyr</span>)
+data(<span class="pl-smi">mtcars</span>)
+str(<span class="pl-smi">mtcars</span>)</pre></div>
+
+<h1>
+<a id="exploratory-plots-" class="anchor" href="#exploratory-plots-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exploratory Plots </h1>
+
+<p>Plots of mpg vs varius variables
+Sample plots of mpg vs variables</p>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">datasets</span>)
+data(<span class="pl-smi">mtcars</span>)</pre></div>
+
+<div class="highlight highlight-source-r"><pre>boxplot(<span class="pl-smi">mpg</span> <span class="pl-k">~</span> <span class="pl-smi">am</span>, <span class="pl-v">data</span> <span class="pl-k">=</span> <span class="pl-smi">mtcars</span>,
+                        <span class="pl-v">col</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>yellow<span class="pl-pds">"</span></span>,
+                        <span class="pl-v">xlab</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Miles/(US) gallon<span class="pl-pds">"</span></span>,
+                        <span class="pl-v">ylab</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>variable<span class="pl-pds">"</span></span>)</pre></div>
+
+<h1>
+<a id="prediction-function-in-data-product" class="anchor" href="#prediction-function-in-data-product" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prediction Function in Data Product</h1>
+
+<p>The following Prediction function is used:</p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">LinearModel</span> <span class="pl-k">&lt;-</span> lm(<span class="pl-smi">mpg</span> <span class="pl-k">~</span>. ,  <span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">mtcars</span>)
+<span class="pl-smi">OptimizedModel</span> <span class="pl-k">&lt;-</span> step(<span class="pl-smi">LinearModel</span>,<span class="pl-v">direction</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>both<span class="pl-pds">"</span></span>)
+summary(<span class="pl-smi">OptimizedModel</span>)</pre></div>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
